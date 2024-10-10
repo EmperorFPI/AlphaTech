@@ -6,9 +6,10 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "moduleResolution": "bundler",
-    // "allowImportingTsExtensions": true,
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "noEmit": true,
     "jsx": "react-jsx",
     "strict": true,
     "noUnusedLocals": true,
@@ -17,10 +18,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "composite": true,
-    "noEmit": true,
-    "outDir": "./dist"
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
