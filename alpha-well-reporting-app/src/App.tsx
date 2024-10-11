@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,10 +8,17 @@ import { WellDataTable } from "./components/WellDataTable";
 import { AerialMapView } from "./components/AerialMapView";
 import { DataEntryForm } from "./components/DataEntryForm";
 
-// Mock data
-const individualFields = ['Eagle Ford', 'Permian Basin', 'Bakken'];
-const fields = ['All Fields', ...individualFields];
-const wells = {
+// Define a union type for the field names
+type Field = 'All Fields' | 'Eagle Ford' | 'Permian Basin' | 'Bakken';
+
+// Define the individual fields
+const individualFields: Field[] = ['Eagle Ford', 'Permian Basin', 'Bakken'];
+
+// Define the fields array, including 'All Fields'
+const fields: Field[] = ['All Fields', ...individualFields];
+
+// Type the wells object using the Field type
+const wells: Record<Field, string[]> = {
   'All Fields': [],
   'Eagle Ford': ['EF-01', 'EF-02', 'EF-03'],
   'Permian Basin': ['PB-01', 'PB-02', 'PB-03'],
@@ -19,8 +26,9 @@ const wells = {
 };
 
 function App() {
-  const [selectedField, setSelectedField] = useState(fields[0]);
-  const [selectedWell, setSelectedWell] = useState('All Wells');
+  // Type the state to use the Field type
+  const [selectedField, setSelectedField] = useState<Field>(fields[0]);
+  const [selectedWell, setSelectedWell] = useState<string>('All Wells');
 
   const availableWells = useMemo(() => {
     if (selectedField === 'All Fields') {
@@ -39,16 +47,16 @@ function App() {
             <CardTitle>Field Selection</CardTitle>
           </CardHeader>
           <CardContent>
-            <Select onValueChange={setSelectedField} defaultValue={selectedField}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select a field" />
-              </SelectTrigger>
-              <SelectContent>
-                {fields.map(field => (
-                  <SelectItem key={field} value={field}>{field}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <Select onValueChange={(value) => setSelectedField(value as Field)} defaultValue={selectedField}>
+      <SelectTrigger>
+        <SelectValue placeholder="Select a field" />
+      </SelectTrigger>
+      <SelectContent>
+        {fields.map(field => (
+      <SelectItem key={field} value={field}>{field}</SelectItem>
+        ))}
+      </SelectContent>
+      </Select>
           </CardContent>
         </Card>
         
