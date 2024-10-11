@@ -1,9 +1,14 @@
-import React from 'react';
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+// Define prop types for ProductionChart
+interface ProductionChartProps {
+  field: 'All Fields' | 'Eagle Ford' | 'Permian Basin' | 'Bakken'; // Or use the Field type if it's exported
+  well: string;
+}
+
 // Mock data - replace with actual data in a real application
-const generateMockData = (field, well) => {
+const generateMockData = (field: ProductionChartProps['field'], well: string) => {
   const baseProduction = field === 'Eagle Ford' ? 1000 : field === 'Permian Basin' ? 1500 : 800;
   const wellMultiplier = well === 'All Wells' ? 3 : 1;
   
@@ -13,7 +18,7 @@ const generateMockData = (field, well) => {
   }));
 };
 
-export function ProductionChart({ field, well }) {
+export function ProductionChart({ field, well }: ProductionChartProps) {
   const data = generateMockData(field, well);
 
   return (

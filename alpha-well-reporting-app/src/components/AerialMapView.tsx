@@ -1,7 +1,12 @@
-import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export function AerialMapView({ field, well }) {
+// Define prop types
+interface AerialMapViewProps {
+  field: 'All Fields' | 'Eagle Ford' | 'Permian Basin' | 'Bakken'; // or you can use the Field type if it's exported
+  well: string;
+}
+
+export function AerialMapView({ field, well }: AerialMapViewProps) {
   return (
     <Card>
       <CardHeader>

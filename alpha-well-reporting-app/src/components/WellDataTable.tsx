@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Table,
   TableBody,
@@ -8,8 +7,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+// Define prop types for WellDataTable
+interface WellDataTableProps {
+  field: 'All Fields' | 'Eagle Ford' | 'Permian Basin' | 'Bakken'; // Or use the Field type if it's exported
+  well: string;
+}
+
 // Mock data - replace with actual data in a real application
-const generateMockWellData = (field, well) => {
+const generateMockWellData = (field: WellDataTableProps['field'], well: string) => {
   const baseProduction = field === 'Eagle Ford' ? 1000 : field === 'Permian Basin' ? 1500 : 800;
   const wells = well === 'All Wells' ? ['01', '02', '03'] : [well.split('-')[1]];
   
@@ -22,7 +27,7 @@ const generateMockWellData = (field, well) => {
   }));
 };
 
-export function WellDataTable({ field, well }) {
+export function WellDataTable({ field, well }: WellDataTableProps) {
   const data = generateMockWellData(field, well);
 
   return (
