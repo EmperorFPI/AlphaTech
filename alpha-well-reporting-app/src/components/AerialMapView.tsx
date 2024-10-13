@@ -6,7 +6,13 @@ interface AerialMapViewProps {
   well: string;
 }
 
-const wellCoordinates = {
+type WellCoordinates = {
+  [K in Exclude<AerialMapViewProps['field'], 'All Fields'>]: {
+    [wellName: string]: { lat: number; lng: number };
+  };
+};
+
+const wellCoordinates: WellCoordinates = {
   'Eagle Ford': {
     'EF-01': { lat: 29.4241, lng: -98.4936 },
     'EF-02': { lat: 29.5241, lng: -98.5936 },
@@ -23,14 +29,15 @@ const wellCoordinates = {
     'BK-03': { lat: 48.1000, lng: -103.2232 },
   },
 };
-
 const mapContainerStyle = {
   width: '100%',
   height: '400px'
 };
 
 export function AerialMapView({ field, well }: AerialMapViewProps) {
-  const coordinates = wellCoordinates[field]?.[well] || { lat: 0, lng: 0 };
+  const coordinates = field !== 'All Fields' 
+    ? wellCoordinates[field]?.[well] || { lat: 0, lng: 0 }
+    : { lat: 0, lng: 0 };
 
   return (
     <Card>
